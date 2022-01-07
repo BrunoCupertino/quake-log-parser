@@ -2,7 +2,7 @@
 Parse a Quake game log and extract info from it
 
 # run
-Extract report by running these command:
+Extract report by running these commands:
 ```
  ruby log_parser.rb log/qgames.log
 ```
