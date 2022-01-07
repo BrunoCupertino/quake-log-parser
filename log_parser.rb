@@ -1,4 +1,5 @@
 load 'game.rb'
+load 'report.rb'
 
 INIT_GAME_PATTERN = "InitGame:"
 KILL_PATTERN = "Kill:"
@@ -10,6 +11,7 @@ if ARGV.size === 0
 end
 
 file_name = ARGV[0]
+output_format = ARGV[1] || "-raw"
 
 if !File.file?(file_name)
     puts "file:#{file_name} not found!"
@@ -21,40 +23,34 @@ end
 private
 
 def process(line)
-    if line.include? INIT_GAME_PATTERN
+    if line.include?(INIT_GAME_PATTERN)
         @games.append(Game.new)
         return
     end
 
-    if line.include? KILL_PATTERN
+    if line.include?(KILL_PATTERN)
         game = @games.last
 
-        killer = get_killer(line)
-        murdered = get_murdered(line)
-        cause_of_death = get_cause_of_death(line)
+        player_killer = extract_killer(line)
+        player_murdered = extract_murdered(line)
+        cause_of_death = extract_cause_of_death(line)
 
-        game.kill(killer, murdered, cause_of_death)
+        game.update_stats(player_killer, player_murdered, cause_of_death)
     end
 end
 
-def printReport
-    @games.each do |game|
-        puts "game:#{game.id}, total_kills:#{game.total_kills}, players:#{game.players}, kills:#{game.kills}, kills_by_means:#{game.kills_by_means}"
-    end
-end
-
-def get_killer(line)    
+def extract_killer(line)    
     line.match(/([^:]+).(?=\skilled)/)[0].strip
 end
 
-def get_murdered(line)
+def extract_murdered(line)
     line.match(/((?<=killed\s).*(?=\sby))/)[0].strip
 end
 
-def get_cause_of_death(line)
+def extract_cause_of_death(line)
     line.match(/((?<=by\s).*)/)[0].strip
 end
 
 file_contents = File.foreach(file_name) { |line| process(line) }
 
-printReport
+printReport(@games, output_format)
