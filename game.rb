@@ -15,13 +15,13 @@ class Game
         @kills_by_means = Hash[]
     end
 
-    def update_stats(player_killer, player_murdered, cause_of_death)        
+    def update_stats(player_killer, player_murdered, cause_of_death)
         playerToUpdate = player_murdered
         valueToAdd = -1
 
         if !is_world_player?(player_killer)
             playerToUpdate = player_killer
-            valueToAdd = 1              
+            valueToAdd = 1
 
             @players.add(player_killer)
             @players.add(player_murdered)
