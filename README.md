@@ -12,7 +12,7 @@ or
 ```
 for a beauty version that includes:
 - not show negative kill values
-- all players are showned in ranking include players with no score
+- all players are shown in ranking include players with no score
 
 # test
 The tests can be running using this command:
