@@ -48,11 +48,11 @@ def get_killer(line)
 end
 
 def get_murdered(line)
-    line.match(/((?<=killed\s).*(?=\sby))/)[0]
+    line.match(/((?<=killed\s).*(?=\sby))/)[0].strip
 end
 
 def get_cause_of_death(line)
-    line.match(/((?<=by\s).*)/)[0]
+    line.match(/((?<=by\s).*)/)[0].strip
 end
 
 file_contents = File.foreach(file_name) { |line| process(line) }
