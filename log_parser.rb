@@ -24,7 +24,7 @@ private
 
 def process(line)
     if line.include?(INIT_GAME_PATTERN)
-        @games.append(Game.new)
+        @games << Game.new
         return
     end
 

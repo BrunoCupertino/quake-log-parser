@@ -23,8 +23,8 @@ class Game
             playerToUpdate = player_killer
             valueToAdd = 1
 
-            @players.add(player_killer)
-            @players.add(player_murdered)
+            @players << player_killer
+            @players << player_murdered
         end        
             
         update_player_kills(playerToUpdate, valueToAdd) if player_killer != player_murdered
